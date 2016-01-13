@@ -302,6 +302,7 @@ zless = view one line of the file at a time (same as less)
 sudo apt-get install <nameOfSoftware>
 
 // If you have source code
+
 // Decompress the file in a directory. If you have INSTALL, read the instructions
 	- execute ./configure <-- creates a makefile
 	- run make <-- builds application binaries
