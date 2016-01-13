@@ -306,7 +306,11 @@ sudo apt-get install <nameOfSoftware>
 // If you have source code
 
 // Decompress the file in a directory. If you have INSTALL, read the instructions
+
 	• execute ./configure <-- creates a makefile
+
 	• run make <-- builds application binaries
+
 	• switch to root --> su
+	
 	• make install <-- installs the software
