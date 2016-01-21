@@ -325,3 +325,93 @@ sudo apt-get install <nameOfSoftware>
 	• switch to root --> su
 	
 	• make install <-- installs the software
+
+
+## Bash Programming
+
+```bash
+// Finds where bash binary is
+which bash
+```
+
+Start every bash script with
+```bash
+#!/bin/bash
+# the rest of the script ....
+```
+
+Every script after creation should be make executable
+```bash
+$ chmod +x bash_script.sh
+./bash_script.sh
+```
+
+Decalring variable
+```bash
+#!/bin/bash
+VAR="TEST"
+echo $VAR
+```
+
+Local and Global Variables
+```bash
+#!/bin/bash
+VAR="GLOBAL"
+function func { // The space between the name of the function and the opening parenthesis is important
+	local VAR="LOCAL"
+	echo $VAR
+}
+
+echo $VAR
+func()
+```
+
+Arguments passing to a bash script
+```bash
+#!/bin/bash
+
+echo $1 // This is the first argument passed to the script
+echo $2 // This is the second argument passed to the script
+echo $3 // This is the third argument passed to the script
+...
+
+// You can assing all the arguiments to an array
+args=("$@")
+
+// And than use the arguments
+echo ${args[0]}
+echo ${args[1]}
+echo ${args[2]}
+
+// This will print all the arguments
+echo $@
+
+// Or you can print the number of the arguments passed
+echo $#;
+```
+
+Executing bash commands from a bash script
+```bash
+echo `list -lA` // with backticks
+echo list -lA // without backticks
+```
+
+Reading input from the user
+```bash
+#!/bin/bash
+
+echo "Please, type a command: \c " 
+read word
+echo $word
+
+// The other way is by reading the input and store it into build-in variable $REPLY
+read 
+echo $REPLY;
+```
+
+Bash Trap Command
+```bash
+#!/bin/bash
+
+```
+
