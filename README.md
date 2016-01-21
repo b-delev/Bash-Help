@@ -205,6 +205,17 @@ usermod -g bob boby = change account name
 usermod -aG friends bob = add groups to a user without loosing the ones he's already in
 ```
 
+Execute programm or script as another user
+edit visudo
+
+```bash
+sudo visudo
+
+user1 ALL=(user2) NOPASSWD: /home/user2/script.sh
+```
+
+
+
 ## File Permissions
 
 ```bash
