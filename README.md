@@ -409,9 +409,522 @@ read
 echo $REPLY;
 ```
 
-Bash Trap Command
+Bash Trap Command - used to prevent user to cancel script execution with Ctrl+C
+```bash
+#!/bin/bash
+trap bashtrap INT
+
+clear;
+
+# bash trap function is executed when CTRL-C is pressed:
+bashtrap()
+{
+    echo "CTRL+C Detected !...executing bash trap !"
+}
+
+# for loop from 1/10 to 10/10
+for a in `seq 1 10`; do
+    echo "$a/10 to Exit." 
+    sleep 1;
+done
+echo "Exit Bash Trap Example!!!" 
+```
+
+Arrays
+Declare array
+```bash
+#!/bin/bash
+
+ARRAY=( 'Debian Linux' 'Redhat Linux' Ubuntu Linux )
+
+ELEMENTS=${#ARRAY[@]}
+
+for (( i=0;i<$ELEMENTS;i++)); do
+    echo ${ARRAY[${i}]}
+done 
+
+```
+
+Read file into bash Array
+```bash
+#!/bin/bash
+declare -a ARRAY
+
+# Link filedescriptor 10 with stdin
+exec 10<&0
+
+exec < $1
+let count=0
+
+while read LINE; do
+
+    ARRAY[$count]=$LINE
+    ((count++))
+done
+
+echo Number of elements: ${#ARRAY[@]}
+echo ${ARRAY[@]}
+exec 0<&10 10<&-
+```
+
+Bash if/else
+```bash
+#!/bin/bash
+
+directory="./BashDirectory"
+
+if [ -d $directory ]; then
+	echo "Directory exists"
+else 
+	echo "Directory does not exists"
+fi 
+```
+
+Nested if/else
+```bash
+#!/bin/bash
+
+directory="./BashDirectory"
+
+if [ -d $directory ]; then
+	echo "Directory exists"
+	if [ $choice -eq 2 ] ; then
+		echo "You have chosen word: Scripting"
+    else
+		echo "You have chosen word: Bash"
+    fi
+else
+	echo "Directory does not exists"
+fi
+```
+
+Arithmetic Comparisons
+
+-lt	<
+-gt	>
+-le	<=
+-ge	>=
+-eq	==
+-ne	!=
+
+```bash
+#!/bin/bash
+NUM1=2
+NUM2=2
+
+if   [ $NUM1 -eq $NUM2 ]; then
+	echo "Both Values are equal"
+elif [ $NUM1 -gt $NUM2 ]; then
+	echo "NUM1 is greater then NUM2"
+else 
+	echo "NUM2 is greater then NUM1"
+fi 
+
+```
+
+String Comparisons
+=		equal
+!=		not equal
+<		less then
+>		greater then
+-n s1	string s1 is not empty
+-z s1	string s1 is empty
+
 ```bash
 #!/bin/bash
 
 ```
+
+Bash File Testing
+
+-b filename	Block special file
+-c filename	Special character file
+-d directoryname	Check for directory existence
+-e filename	Check for file existence
+-f filename	Check for regular file existence not a directory
+-G filename	Check if file exists and is owned by effective group ID.
+-g filename	true if file exists and is set-group-id.
+-k filename	Sticky bit
+-L filename	Symbolic link
+-O filename	True if file exists and is owned by the effective user id.
+-r filename	Check if file is a readable
+-S filename	Check if file is socket
+-s filename	Check if file is nonzero size
+-u filename	Check if file set-ser-id bit is set
+-w filename	Check if file is writable
+-x filename	Check if file is executable
+
+```bash
+#!/bin/bash
+file="./file"
+if [ -e $file ]; then
+	echo "File exists"
+else 
+	echo "File does not exists"
+fi 
+```
+
+Bash FOR loop
+```bash
+#!/bin/bash
+for f in $( ls /var/ ); do
+	echo $f
+done 
+```
+
+Bash WHILE loop
+```bash
+#!/bin/bash
+COUNT=6
+
+while [ $COUNT -gt 0 ]; do
+	echo Value of count is: $COUNT
+	let COUNT=COUNT-1
+done 
+```
+
+Bash UNTIL loop
+```bash
+#!/bin/bash
+COUNT=0
+
+until [ $COUNT -gt 5 ]; do
+        echo Value of count is: $COUNT
+        let COUNT=COUNT+1
+done 
+```
+
+Control bash loop with
+```bash
+#!/bin/bash
+
+```
+
+Bash Functions
+```bash
+#!/bin/bash
+
+function func {
+    echo $1
+}
+
+func "Echo func with 1 parameter"
+
+```
+
+Bash Select
+```bash
+#!/bin/bash
+
+PS3='Choose one word: ' 
+
+# bash select
+select word in "linux" "bash" "scripting" "tutorial" 
+do
+  echo "The word you have selected is: $word"
+# Break, otherwise endless loop
+  break  
+done
+
+exit 0 
+
+```
+
+Case statement conditional
+```bash
+#!/bin/bash
+
+echo "What is your preferred programming / scripting language"
+echo "1) bash"
+echo "2) perl"
+echo "3) phyton"
+echo "4) c++"
+echo "5) I do not know !"
+read case;
+
+case $case in
+    1) echo "You selected bash";;
+    2) echo "You selected perl";;
+    3) echo "You selected phyton";;
+    4) echo "You selected c++";;
+    5) exit
+esac 
+
+```
+
+Escaping Meta characters
+```bash
+#!/bin/bash
+
+BASH_VAR="Bash Script"
+
+echo $BASH_VAR
+
+echo \$BASH_VAR
+
+```
+
+Single quotes
+```bash
+#!/bin/bash
+
+BASH_VAR="Bash Script"
+
+// single quotes eliminates the special characters 
+echo '$BASH_VAR  "$BASH_VAR"' 
+```
+
+Double Quotes
+```bash
+#!/bin/bash
+
+// Double quotes in bash will suppress special meaning of every meta characters except "$", "\" and "`". 
+
+BASH_VAR="Bash Script"
+
+echo "It's $BASH_VAR  and \"$BASH_VAR\" using backticks: `date`" 
+
+```
+
+Bash quoting with ANSI-C style
+
+\a	alert (bell)	
+\b	backspace
+\e	an escape character	
+\f	form feed
+\n	newline	
+\r	carriage return
+\t	horizontal tab	
+\v	vertical tab
+\\	backslash	
+\`	single quote
+\nnn	octal value of characters ( see [http://www.asciitable.com/ ASCII table] )	
+\xnn	hexadecimal value of characters ( see [http://www.asciitable.com/ ASCII table] )
+
+```bash
+#!/bin/bash
+
+echo $'web: www.linuxconfig.org\nemail: web\x40linuxconfig\56org' 
+
+```
+
+Bash Addition Calculator Example
+```bash
+#!/bin/bash
+
+let RESULT1=$1+$2
+echo $1+$2=$RESULT1 ' -> # let RESULT1=$1+$2'
+declare -i RESULT2
+RESULT2=$1+$2
+echo $1+$2=$RESULT2 ' -> # declare -i RESULT2; RESULT2=$1+$2'
+echo $1+$2=$(($1 + $2)) ' -> # $(($1 + $2))' 
+
+```
+
+Bash Arithmetics
+```bash
+#!/bin/bash
+
+
+echo '### let ###'
+# bash addition
+let ADDITION=3+5
+echo "3 + 5 =" $ADDITION
+
+# bash subtraction
+let SUBTRACTION=7-8
+echo "7 - 8 =" $SUBTRACTION 
+
+# bash multiplication
+let MULTIPLICATION=5*8
+echo "5 * 8 =" $MULTIPLICATION
+
+# bash division
+let DIVISION=4/2
+echo "4 / 2 =" $DIVISION
+
+# bash modulus
+let MODULUS=9%4
+echo "9 % 4 =" $MODULUS
+
+# bash power of two
+let POWEROFTWO=2**2
+echo "2 ^ 2 =" $POWEROFTWO
+
+
+echo '### Bash Arithmetic Expansion ###'
+# There are two formats for arithmetic expansion: $[ expression ] 
+# and $(( expression #)) its your choice which you use
+
+echo 4 + 5 = $((4 + 5))
+echo 7 - 7 = $[ 7 - 7 ]
+echo 4 x 6 = $((3 * 2))
+echo 6 / 3 = $((6 / 3))
+echo 8 % 7 = $((8 % 7))
+echo 2 ^ 8 = $[ 2 ** 8 ]
+
+
+echo '### Declare ###'
+
+echo -e "Please enter two numbers \c"
+# read user input
+read num1 num2
+declare -i result
+result=$num1+$num2
+echo "Result is:$result "
+
+# bash convert binary number 10001
+result=2#10001
+echo $result
+
+# bash convert octal number 16
+result=8#16
+echo $result
+
+# bash convert hex number 0xE6A
+result=16#E6A
+echo $result 
+
+```
+
+Round floating point number
+```bash
+#!/bin/bash
+
+floating_point_number=3.3446
+echo $floating_point_number
+# round floating point number with bash
+for bash_rounded_number in $(printf %.0f $floating_point_number); do
+echo "Rounded number with bash:" $bash_rounded_number
+done 
+
+```
+
+Bash floating point calculations
+```bash
+#!/bin/bash
+
+# Simple linux bash calculator 
+echo "Enter input:" 
+read userinput
+echo "Result with 2 digits after decimal point:"
+echo "scale=2; ${userinput}" | bc 
+echo "Result with 10 digits after decimal point:"
+echo "scale=10; ${userinput}" | bc 
+echo "Result as rounded integer:"
+echo $userinput | bc 
+
+```
+
+
+## Redirections
+
+STDOUT from bash script to STDERR
+```bash
+#!/bin/bash
+
+echo "Redirect this STDOUT to STDERR" 1>&2 
+
+```
+
+STDERR from bash script to STDOUT
+```bash
+#!/bin/bash
+
+cat $1 2>&1 
+
+```
+
+stdout to screen
+```bash
+#!/bin/bash
+
+$ touch file1
+$ ls file1 
+file1
+
+```
+
+stdout to file
+```bash
+#!/bin/bash
+
+$ ls file1 > STDOUT
+$ cat STDOUT 
+file1
+
+```
+
+stderr to file
+```bash
+#!/bin/bash
+
+// By default STDERR is displayed on the screen:
+
+$ ls
+file1  STDOUT
+$ ls file2
+ls: cannot access file2: No such file or directory
+
+
+// This example will demonstrate recording the error to a file
+
+$ ls
+file1  STDOUT
+$ ls file1 file2 2> STDERR
+file1
+$ cat STDERR 
+ls: cannot access file2: No such file or directory
+
+```
+
+stdout to stderr
+```bash
+#!/bin/bash
+
+$ ls
+file1  STDERR  STDOUT
+$ ls file1 file2 2> STDERR_STDOUT 1>&2
+$ cat STDERR_STDOUT
+ls: cannot access file2: No such file or directory
+file1
+
+```
+
+stderr to stdout
+```bash
+#!/bin/bash
+
+$ ls
+file1  STDERR  STDOUT
+$ ls file1 file2 > STDERR_STDOUT 2>&1
+$ cat STDERR_STDOUT 
+ls: cannot access file2: No such file or directory
+file1
+
+```
+
+stderr and stdout to file
+```bash
+#!/bin/bash
+
+$ ls
+file1  STDERR  STDOUT
+$ ls file1 file2 &> STDERR_STDOUT
+$ cat STDERR_STDOUT 
+ls: cannot access file2: No such file or directory
+file1
+
+// Or 
+
+ls file1 file2 >& STDERR_STDOUT
+$ cat STDERR_STDOUT 
+ls: cannot access file2: No such file or directory
+file1
+
+```
+
+
+
+
 
